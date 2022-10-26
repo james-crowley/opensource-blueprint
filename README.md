@@ -1,2 +1,2 @@
-# opensource-blueprint
-An Open Source Blueprint for Utilizing CircleCI on an Open Source Project 
+# Open Source Blueprint for CircleCI
+An Open Source Blueprint for utilizing CircleCI on an Open Source Project.
