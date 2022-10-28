@@ -173,6 +173,18 @@ jobs:
     environment:
       DOCKER_IMAGE: circleci-demo-app
 
+  runner-test:
+    # machine: true
+    # resource_class: awesomecicd/opensource-runner
+    executor: amd64
+    steps:
+      - set-build-env
+      - run:
+          name: Testing on a Runner
+          command: echo "testing on a runner!"
+    environment:
+      DOCKER_IMAGE: circleci-demo-app
+
   tag-and-publish:
     executor: amd64
     steps:
@@ -200,12 +212,20 @@ workflows:
           name: "Scan image via Snyk"
           requires:
             - "Building Docker Image"
-      - tag-and-publish:
-          name: "Tag and Publish Docker Images"
+      - runner-test:
+          name: "Testing on Real Hardware"
           requires:
             - "Testing Docker Image"
             - "Scan image via Snyk"
             - "Testing Python Demo Code"
+          filters:
+            branches:
+              only: 
+                - trying
+      - tag-and-publish:
+          name: "Tag and Publish Docker Images"
+          requires:
+            - "Testing on Real Hardware"
           filters:
             branches:
               ignore: /.*/
