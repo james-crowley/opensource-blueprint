@@ -204,17 +204,26 @@ workflows:
           context: circleci-demo-app-sonarcloud
           filters:
             tags:
-              only: /.*/
+              only: /^\d+\.\d+\.\d+$/
       - build-image:
           name: "Building Docker Image"
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
       - test-image:
           name: "Testing Docker Image"
           requires:
             - "Building Docker Image"
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
       - scan-image:
           name: "Scan image via Snyk"
           requires:
             - "Building Docker Image"
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
       - runner-test:
           name: "Testing on Real Hardware"
           requires:
@@ -225,6 +234,9 @@ workflows:
             branches:
               only: 
                 - trying
+                - main
+            tags:
+              only: /^\d+\.\d+\.\d+$/
       - tag-and-publish:
           name: "Tag and Publish Docker Images"
           requires:
