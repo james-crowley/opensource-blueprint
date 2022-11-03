@@ -202,6 +202,9 @@ workflows:
       - test-demo:
           name: "Testing Python Demo Code"
           context: circleci-demo-app-sonarcloud
+          filters:
+            tags:
+              only: /.*/
       - build-image:
           name: "Building Docker Image"
       - test-image:
