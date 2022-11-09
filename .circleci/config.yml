@@ -132,7 +132,7 @@ executors:
 
   amd64:
     machine:
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2004:current
     resource_class: medium
 
 
@@ -217,18 +217,18 @@ workflows:
           filters:
             tags:
               only: /^\d+\.\d+\.\d+$/
-      - scan-image:
-          name: "Scan image via Snyk"
-          requires:
-            - "Building Docker Image"
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
+      # - scan-image:
+      #     name: "Scan image via Snyk"
+      #     requires:
+      #       - "Building Docker Image"
+      #     filters:
+      #       tags:
+      #         only: /^\d+\.\d+\.\d+$/
       - runner-test:
           name: "Testing on Real Hardware"
           requires:
             - "Testing Docker Image"
-            - "Scan image via Snyk"
+            # - "Scan image via Snyk"
             - "Testing Python Demo Code"
           filters:
             branches:
