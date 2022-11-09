@@ -199,12 +199,12 @@ jobs:
 workflows:
   demo:
     jobs:
-      - test-demo:
-          name: "Testing Python Demo Code"
-          context: circleci-demo-app-sonarcloud
-          filters:
-            tags:
-              only: /^\d+\.\d+\.\d+$/
+#       - test-demo:
+#           name: "Testing Python Demo Code"
+#           context: circleci-demo-app-sonarcloud
+#           filters:
+#             tags:
+#               only: /^\d+\.\d+\.\d+$/
       - build-image:
           name: "Building Docker Image"
           filters:
@@ -229,7 +229,7 @@ workflows:
           requires:
             - "Testing Docker Image"
             # - "Scan image via Snyk"
-            - "Testing Python Demo Code"
+#             - "Testing Python Demo Code"
           filters:
             branches:
               only: 
